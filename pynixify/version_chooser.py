@@ -112,10 +112,14 @@ class VersionChooser:
                     found_pypi = False
 
             if not found_nixpkgs and not found_pypi:
-                raise PackageNotFound(f'{r.name} not found in PyPI nor nixpkgs')
+                print(f'Skipping missing package: {str(r)} from {str(coming_from)}')
+                return
+                #raise PackageNotFound(f'{r.name} not found in PyPI nor nixpkgs')
 
             if not pkgs:
-                raise NoMatchingVersionFound(str(r))
+                print(f'Skipping missing package: {str(r)} from {str(coming_from)}')
+                return
+                #raise NoMatchingVersionFound(str(r))
 
             pkg = max(pkgs, key=operator.attrgetter('version'))
         self._choosed_packages[canonicalize_name(r.name)] = (pkg, r.specifier)
@@ -184,6 +188,7 @@ class ChosenPackageRequirements:
                 continue
             package = version_chooser.package_for(req.name)
             if package is None:
+                continue
                 raise PackageNotFound(
                     f'Package {req.name} not found in the version chooser'
                 )
@@ -197,6 +202,7 @@ class ChosenPackageRequirements:
                     continue
                 package = version_chooser.package_for(req.name)
                 if package is None:
+                    continue
                     raise PackageNotFound(
                         f'Package {req.name} not found in the version chooser'
                     )
@@ -210,6 +216,7 @@ class ChosenPackageRequirements:
                 continue
             package = version_chooser.package_for(req.name)
             if package is None:
+                continue
                 raise PackageNotFound(
                     f'Package {req.name} not found in the version chooser'
                 )

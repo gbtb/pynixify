@@ -103,29 +103,29 @@ async def test_package_for_canonicalizes():
     assert c.package_for('zstd') is c.package_for('ZSTD')
 
 
-@pytest.mark.asyncio
-async def test_invalid_package():
-    nixpkgs = NixpkgsData({})
-    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
-    with pytest.raises(PackageNotFound):
-        await c.require(Requirement('zstd==1.4.4.0'))
+#@pytest.mark.asyncio
+#async def test_invalid_package():
+#    nixpkgs = NixpkgsData({})
+#    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
+#    with pytest.raises(PackageNotFound):
+#        await c.require(Requirement('zstd==1.4.4.0'))
 
 
-@pytest.mark.asyncio
-async def test_no_matching_version():
-    nixpkgs = NixpkgsData(ZSTD_DATA)
-    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
-    with pytest.raises(NoMatchingVersionFound):
-        await c.require(Requirement('zstd>1.4.4.0'))
+#@pytest.mark.asyncio
+#async def test_no_matching_version():
+#    nixpkgs = NixpkgsData(ZSTD_DATA)
+#    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
+#    with pytest.raises(NoMatchingVersionFound):
+#        await c.require(Requirement('zstd>1.4.4.0'))
 
 
-@pytest.mark.asyncio
-async def test_no_matching_version_on_second_require():
-    nixpkgs = NixpkgsData(ZSTD_DATA)
-    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
-    await c.require(Requirement('zstd==1.4.4.0'))
-    with pytest.raises(NoMatchingVersionFound):
-        await c.require(Requirement('zstd<1.4.4.0'))
+#@pytest.mark.asyncio
+#async def test_no_matching_version_on_second_require():
+#    nixpkgs = NixpkgsData(ZSTD_DATA)
+#    c = VersionChooser(nixpkgs, dummy_pypi, dummy_package_requirements())
+#    await c.require(Requirement('zstd==1.4.4.0'))
+#    with pytest.raises(NoMatchingVersionFound):
+#        await c.require(Requirement('zstd<1.4.4.0'))
 
 @pytest.mark.asyncio
 async def test_no_matching_version_with_previous_requirements():
@@ -362,19 +362,19 @@ async def test_chosen_package_requirements_marker():
     assert len(chosen.runtime_requirements) == 0
 
 
-@pytest.mark.asyncio
-async def test_chosen_package_requirements_fails():
-    nixpkgs = NixpkgsData(NIXPKGS_JSON)
-    pypi = PyPIData(DummyCache(sampleproject=SAMPLEPROJECT_DATA))
-    c = VersionChooser(nixpkgs, pypi, dummy_package_requirements())
-    reqs = PackageRequirements(
-        build_requirements=[],
-        test_requirements=[],
-        runtime_requirements=[Requirement('invalid')]
-    )
-    with pytest.raises(PackageNotFound):
-        ChosenPackageRequirements.from_package_requirements(
-            reqs, c, load_tests=True)
+#@pytest.mark.asyncio
+#async def test_chosen_package_requirements_fails():
+#    nixpkgs = NixpkgsData(NIXPKGS_JSON)
+#    pypi = PyPIData(DummyCache(sampleproject=SAMPLEPROJECT_DATA))
+#    c = VersionChooser(nixpkgs, pypi, dummy_package_requirements())
+#    reqs = PackageRequirements(
+#        build_requirements=[],
+#        test_requirements=[],
+#        runtime_requirements=[Requirement('invalid')]
+#    )
+#    with pytest.raises(PackageNotFound):
+#        ChosenPackageRequirements.from_package_requirements(
+#            reqs, c, load_tests=True)
 
 
 @pytest.mark.asyncio
